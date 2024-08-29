@@ -4,31 +4,31 @@ public class Aquarium
 {
     public List<Fish> FishList = new()
     {
-        new("Betta", "Blue", 17),
-        new("Guppy", "Yellow", 23),
-        new("Angelfish", "Silver", 14),
-        new("Goldfish", "Orange", 28),
-        new("Neon Tetra", "Neon blue", 19),
-        new("Corydoras", "Bronze", 21),
-        new("Discus", "Red", 15),
-        new("Molly", "Black", 30),
-        new("Zebra Danio", "Striped", 12),
-        new("Cherry Barb", "Red", 20),
-        new("Swordtail", "Green", 26),
-        new("Platy", "Orange", 18),
-        new("Rainbowfish", "Multicolored", 24),
-        new("Clownfish", "Orange and white", 27),
-        new("Oscar", "Black and orange", 16),
-        new("Killifish", "Blue and red", 22),
-        new("Pearl Gourami", "Pearlescent", 29),
-        new("Otocinclus", "Brown", 13),
-        new("Firemouth Cichlid", "Red and gray", 25),
-        new("Ram Cichlid", "Blue and yellow", 30),
+        new("Betta", "Blue"),
+        new("Guppy", "Yellow"),
+        new("Angelfish", "Silver"),
+        new("Goldfish", "Orange"),
+        new("Neon Tetra", "Neon blue"),
+        new("Corydoras", "Bronze"),
+        new("Discus", "Red"),
+        new("Molly", "Black"),
+        new("Zebra Danio", "Striped"),
+        new("Cherry Barb", "Red"),
+        new("Swordtail", "Green"),
+        new("Platy", "Orange"),
+        new("Rainbowfish", "Multicolored"),
+        new("Clownfish", "Orange and white"),
+        new("Oscar", "Black and orange"),
+        new("Killifish", "Blue and red"),
+        new("Pearl Gourami", "Pearlescent"),
+        new("Otocinclus", "Brown"),
+        new("Firemouth Cichlid", "Red and gray"),
+        new("Ram Cichlid", "Blue and yellow"),
     };
 
-    public void CreateFish(string type, string color, int age)
+    public void CreateFish(string type, string color)
     {
-        FishList.Add(new Fish(type, color, age));
+        FishList.Add(new Fish(type, color));
     }
 
     public void ShowFish()
@@ -68,4 +68,38 @@ public class Aquarium
         }
     }
 
+    public void Breed(int firstIndex, int secondIndex)
+    {
+        Fish firstFish = FishList[firstIndex];
+        Fish secondFish = FishList[secondIndex];
+        string type = "";
+        string color = "";
+        if (Random(1, 2) == 1)
+        {
+            type = firstFish.Type;
+        }
+        else if (Random(1, 2) == 2)
+        {
+            type = secondFish.Type;
+        }
+
+        if (Random(1, 2) == 1)
+        {
+            color = firstFish.Color;
+        }
+        else if (Random(1, 2) == 2)
+        {
+            color = secondFish.Color;
+        }
+
+        Console.WriteLine($"A new {color} {type} fish has been born!");
+        FishList.Add(new Fish(type, color));
+    }
+
+    private int Random(int min, int max)
+    {
+        Random random = new Random();
+        var rnd = random.Next(min, max);
+        return rnd;
+    }
 }
