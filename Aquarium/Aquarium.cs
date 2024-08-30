@@ -4,29 +4,30 @@ public class Aquarium
 {
     public List<Fish> FishList = new()
     {
-        new("Betta", "Blue"),
-        new("Guppy", "Yellow"),
-        new("Angelfish", "Silver"),
-        new("Goldfish", "Orange"),
-        new("Neon Tetra", "Neon blue"),
-        new("Corydoras", "Bronze"),
-        new("Discus", "Red"),
-        new("Molly", "Black"),
-        new("Zebra Danio", "Striped"),
-        new("Cherry Barb", "Red"),
-        new("Swordtail", "Green"),
-        new("Platy", "Orange"),
-        new("Rainbowfish", "Multicolored"),
-        new("Clownfish", "Orange and white"),
-        new("Oscar", "Black and orange"),
-        new("Killifish", "Blue and red"),
-        new("Pearl Gourami", "Pearlescent"),
-        new("Otocinclus", "Brown"),
-        new("Firemouth Cichlid", "Red and gray"),
-        new("Ram Cichlid", "Blue and yellow"),
+        new(FishType.Betta, "Blue"),
+        new(FishType.Guppy, "Yellow"),
+        new(FishType.Angelfish, "Silver"),
+        new(FishType.Goldfish, "Orange"),
+        new(FishType.Tetra, "Neon Blue"),
+        new(FishType.Corydoras, "Bronze"),
+        new(FishType.Discus, "Red"),
+        new(FishType.Molly, "Black"),
+        new(FishType.Zebrafish, "Striped"),
+        new(FishType.Cherrybarb, "Red"),
+        new(FishType.Swordtail, "Green"),
+        new(FishType.Platy, "Orange"),
+        new(FishType.Rainbowfish, "Multicolored"),
+        new(FishType.Clownfish, "Orange and White"),
+        new(FishType.Oscar, "Black and Orange"),
+        new(FishType.Killifish, "Blue and Red"),
+        new(FishType.Gourami, "Pearlescent"),
+        new(FishType.Otocinclus, "Brown"),
+        new(FishType.Cichlid, "Red and Gray"),
+        new(FishType.Loach, "Blue and Yellow"),
+
     };
 
-    public void CreateFish(string type, string color)
+    public void CreateFish(FishType type, string color)
     {
         FishList.Add(new Fish(type, color));
     }
@@ -43,7 +44,7 @@ public class Aquarium
 
     public void FilterFish(string type)
     {
-        var filteredFish = FishList.Where(f => f.Type.Equals(type, StringComparison.OrdinalIgnoreCase)).ToList();
+        var filteredFish = FishList.Where(f => f.Type.ToString().Equals(type, StringComparison.OrdinalIgnoreCase)).ToList();
 
 
         int placement = 1;
@@ -59,7 +60,7 @@ public class Aquarium
         Fish fishToRemove;
         foreach (Fish fish in FishList)
         {
-            if (type == fish.Type && color == fish.Color)
+            if (type == fish.Type.ToString() && color == fish.Color)
             {
                 fishToRemove = fish;
                 FishList.Remove(fishToRemove);
@@ -72,7 +73,7 @@ public class Aquarium
     {
         Fish firstFish = FishList[firstIndex];
         Fish secondFish = FishList[secondIndex];
-        string type = "";
+        FishType type = FishType.Angelfish;
         string color = "";
         if (Random(1, 2) == 1)
         {
@@ -92,7 +93,7 @@ public class Aquarium
             color = secondFish.Color;
         }
 
-        Console.WriteLine($"A new {color} {type} fish has been born!");
+        Console.WriteLine($"A new {color} {type.ToString()} fish has been born!");
         FishList.Add(new Fish(type, color));
     }
 
@@ -101,5 +102,29 @@ public class Aquarium
         Random random = new Random();
         var rnd = random.Next(min, max);
         return rnd;
+    }
+
+    public void ShowFishType()
+    {
+        Console.WriteLine(FishType.Angelfish.ToString());
+        Console.WriteLine(FishType.Betta.ToString());
+        Console.WriteLine(FishType.Cherrybarb.ToString());
+        Console.WriteLine(FishType.Cichlid.ToString());
+        Console.WriteLine(FishType.Clownfish.ToString());
+        Console.WriteLine(FishType.Corydoras.ToString());
+        Console.WriteLine(FishType.Discus.ToString());
+        Console.WriteLine(FishType.Goldfish.ToString());
+        Console.WriteLine(FishType.Gourami.ToString());
+        Console.WriteLine(FishType.Guppy.ToString());
+        Console.WriteLine(FishType.Killifish.ToString());
+        Console.WriteLine(FishType.Loach.ToString());
+        Console.WriteLine(FishType.Molly.ToString());
+        Console.WriteLine(FishType.Oscar.ToString());
+        Console.WriteLine(FishType.Otocinclus.ToString());
+        Console.WriteLine(FishType.Platy.ToString());
+        Console.WriteLine(FishType.Rainbowfish.ToString());
+        Console.WriteLine(FishType.Swordtail.ToString());
+        Console.WriteLine(FishType.Tetra.ToString());
+        Console.WriteLine(FishType.Zebrafish.ToString());
     }
 }

@@ -2,10 +2,10 @@
 
 public class Fish
 {
-    public string Type { get; set; }
+    public FishType Type { get; set; }
     public string Color { get; set; }
 
-    public Fish(string type, string color)
+    public Fish(FishType type, string color)
     {
         Type = type;
         Color = color;

@@ -19,10 +19,12 @@ public class Menu
             {
                 case 1: //Add new fish
                     Console.WriteLine();
-                    Console.WriteLine("What species is the new fish?");
-                    var type = Console.ReadLine();
+                    Console.WriteLine("Which of these species is the new fish?");
+                    aquarium.ShowFishType();
+                    string typeResponse = Console.ReadLine();
+                    FishType type = Enum.Parse<FishType>(typeResponse, true);
                     Console.WriteLine("What color is the new fish?");
-                    var color = Console.ReadLine();
+                    string color = Console.ReadLine();
                     aquarium.CreateFish(type, color);
                     break;
 
@@ -30,7 +32,7 @@ public class Menu
                     Console.WriteLine();
                     Console.WriteLine("Which fish species do you want to get rid of?");
                     var typeRemove = Console.ReadLine();
-                    aquarium.FilterFish(typeRemove);
+                    aquarium.FilterFish(typeRemove.ToString());
                     Console.WriteLine("Which color do you want to get rid of?");
                     var colorRemove = Console.ReadLine();
                     Console.WriteLine($"Are you sure you want to remove the {colorRemove} {typeRemove}?\nY/N");
