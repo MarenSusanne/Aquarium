@@ -31,15 +31,16 @@ public class Menu
                 case 2: //Get rid of fish
                     Console.WriteLine();
                     Console.WriteLine("Which fish species do you want to get rid of?");
-                    var typeRemove = Console.ReadLine();
-                    aquarium.FilterFish(typeRemove.ToString());
+                    string typeRemove = Console.ReadLine();
+                    FishType typeToRemove = Enum.Parse<FishType>(typeRemove, true);
+                    aquarium.FilterFish(typeRemove);
                     Console.WriteLine("Which color do you want to get rid of?");
-                    var colorRemove = Console.ReadLine();
+                    string colorRemove = Console.ReadLine();
                     Console.WriteLine($"Are you sure you want to remove the {colorRemove} {typeRemove}?\nY/N");
-                    var lastChance = Console.ReadLine();
+                    string lastChance = Console.ReadLine();
                     if (lastChance.ToUpper() == "Y")
                     {
-                        aquarium.RemoveFish(typeRemove, colorRemove);
+                        aquarium.RemoveFish(typeToRemove, colorRemove);
                         Console.WriteLine($"Your have removed the {colorRemove} {typeRemove}");
                     }
                     else
@@ -52,9 +53,9 @@ public class Menu
                     Console.WriteLine();
                     Console.WriteLine("Which two fishes would you like to breed?");
                     Console.WriteLine("First fish: (Use the numbers)");
-                    var firstFish = int.Parse(Console.ReadLine());
+                    int firstFish = int.Parse(Console.ReadLine());
                     Console.WriteLine("Second fish: (Use the numbers)");
-                    var secondFish = int.Parse(Console.ReadLine());
+                    int secondFish = int.Parse(Console.ReadLine());
                     aquarium.Breed(firstFish - 1, secondFish - 1);
                     break;
             }

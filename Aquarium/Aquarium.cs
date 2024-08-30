@@ -55,12 +55,12 @@ public class Aquarium
         }
     }
 
-    public void RemoveFish(string type, string color)
+    public void RemoveFish(FishType type, string color)
     {
         Fish fishToRemove;
         foreach (Fish fish in FishList)
         {
-            if (type == fish.Type.ToString() && color == fish.Color)
+            if (type == fish.Type && color.Equals(fish.Color, StringComparison.OrdinalIgnoreCase))
             {
                 fishToRemove = fish;
                 FishList.Remove(fishToRemove);
@@ -75,23 +75,18 @@ public class Aquarium
         Fish secondFish = FishList[secondIndex];
         FishType type = FishType.Angelfish;
         string color = "";
-        if (Random(1, 2) == 1)
+        int random = Random(1, 2);
+        if (random == 1)
         {
             type = firstFish.Type;
-        }
-        else if (Random(1, 2) == 2)
-        {
-            type = secondFish.Type;
-        }
-
-        if (Random(1, 2) == 1)
-        {
-            color = firstFish.Color;
-        }
-        else if (Random(1, 2) == 2)
-        {
             color = secondFish.Color;
         }
+        else if (random == 2)
+        {
+            type = secondFish.Type;
+            color = firstFish.Color;
+        }
+
 
         Console.WriteLine($"A new {color} {type.ToString()} fish has been born!");
         FishList.Add(new Fish(type, color));
@@ -100,7 +95,7 @@ public class Aquarium
     private int Random(int min, int max)
     {
         Random random = new Random();
-        var rnd = random.Next(min, max);
+        var rnd = random.Next(min, max + 1);
         return rnd;
     }
 
