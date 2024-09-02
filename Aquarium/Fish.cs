@@ -1,9 +1,8 @@
 ﻿namespace Aquarium;
 
-public class Fish : IAquaticAnimal
+public class Fish : AquaticLife
 {
     public FishType Type { get; set; }
-    public string Color { get; set; }
 
     public Fish(FishType type, string color)
     {
@@ -11,13 +10,10 @@ public class Fish : IAquaticAnimal
         Color = color;
     }
 
-    public void Swim()
-    {
-        Console.WriteLine("This fish is swimming");
-    }
+    public string water;
 
-    public void Display()
+    public override string Display()
     {
-
+        return Color + " " + Type;
     }
 }

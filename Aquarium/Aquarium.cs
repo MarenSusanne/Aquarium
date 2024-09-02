@@ -2,79 +2,152 @@
 
 public class Aquarium
 {
-    public List<Fish> FishList = new()
+    public List<FreshwaterFish> FreshwaterFishList = new()
     {
-        new(FishType.Betta, "Blue"),
-        new(FishType.Guppy, "Yellow"),
-        new(FishType.Angelfish, "Silver"),
-        new(FishType.Goldfish, "Orange"),
+        new(FishType.Gourami, "Blue"),
+        new(FishType.Barb, "Red"),
+        new(FishType.Loach, "Brown"),
         new(FishType.Tetra, "Neon Blue"),
-        new(FishType.Corydoras, "Bronze"),
-        new(FishType.Discus, "Red"),
-        new(FishType.Molly, "Black"),
-        new(FishType.Zebrafish, "Striped"),
-        new(FishType.Cherrybarb, "Red"),
-        new(FishType.Swordtail, "Green"),
+        new(FishType.Cichlid, "Yellow"),
+        new(FishType.Betta, "Blue"),
+        new(FishType.Danio, "Striped"),
         new(FishType.Platy, "Orange"),
-        new(FishType.Rainbowfish, "Multicolored"),
+        new(FishType.Guppy, "Yellow"),
+        new(FishType.Rasbora, "Silver"),
+    };
+    public List<SaltwaterFish> SaltwaterFishList = new()
+    {
+        new(FishType.Tang, "Yellow"),
+        new(FishType.Wrasse, "Green"),
+        new(FishType.Gobies, "Orange"),
         new(FishType.Clownfish, "Orange and White"),
-        new(FishType.Oscar, "Black and Orange"),
-        new(FishType.Killifish, "Blue and Red"),
-        new(FishType.Gourami, "Pearlescent"),
-        new(FishType.Otocinclus, "Brown"),
-        new(FishType.Cichlid, "Red and Gray"),
-        new(FishType.Loach, "Blue and Yellow"),
+        new(FishType.Angelfish, "Blue"),
+        new(FishType.Blenny, "Brown"),
+        new(FishType.Damselfish, "Blue"),
+        new(FishType.Hawkfish, "Red"),
+        new(FishType.Lionfish, "Striped"),
+        new(FishType.Triggerfish, "Gray"),
 
     };
 
-    public void CreateFish(FishType type, string color)
+    public void CreateFreshFish(FishType type, string color)
     {
-        FishList.Add(new Fish(type, color));
+
+        FreshwaterFishList.Add(new FreshwaterFish(type, color));
+    }
+    public void CreateSaltFish(FishType type, string color)
+    {
+        SaltwaterFishList.Add(new SaltwaterFish(type, color));
     }
 
-    public void ShowFish()
+    public void ShowFreshFish(bool numbers)
     {
-        int placement = 1;
-        foreach (Fish fish in FishList)
+        if (numbers)
         {
-            Console.WriteLine(placement + ". " + fish.Color + " " + fish.Type);
-            placement++;
+            int placement = 1;
+            foreach (FreshwaterFish fish in FreshwaterFishList)
+            {
+                Console.WriteLine("    " + placement + ". " + fish.Display());
+                placement++;
+            }
+        }
+        else
+        {
+            int placement = 1;
+            foreach (FreshwaterFish fish in FreshwaterFishList)
+            {
+                Console.WriteLine("    " + fish.Display());
+                placement++;
+            }
+        }
+
+    }
+    public void ShowSaltFish(bool numbers)
+    {
+        if (numbers)
+        {
+            int placement = 1;
+            foreach (SaltwaterFish fish in SaltwaterFishList)
+            {
+                Console.WriteLine("    " + placement + ". " + fish.Display());
+                placement++;
+            }
+        }
+        else
+        {
+            int placement = 1;
+            foreach (SaltwaterFish fish in SaltwaterFishList)
+            {
+                Console.WriteLine("    " + fish.Display());
+                placement++;
+            }
         }
     }
 
-    public void FilterFish(string type)
+    public void FilterFish(FishType type)
     {
-        var filteredFish = FishList.Where(f => f.Type.ToString().Equals(type, StringComparison.OrdinalIgnoreCase)).ToList();
+        IEnumerable<Fish> fishList;
 
+        if ((int)type <= (int)FishType.Rasbora)
+        {
+            fishList = FreshwaterFishList;
+        }
+        else if ((int)type >= (int)FishType.Tang)
+        {
+            fishList = SaltwaterFishList;
+        }
+        else
+        {
+            Console.WriteLine("Invalid fish type");
+            return;
+        }
+
+        var filteredFish = fishList.Where(f => f.Type == type).ToList();
 
         int placement = 1;
-        foreach (Fish fish in filteredFish)
+        foreach (var fish in filteredFish)
         {
-            Console.WriteLine(placement + ". " + fish.Color + " " + fish.Type);
+            Console.WriteLine($"{placement}. {fish.Color} {fish.Type}");
             placement++;
         }
     }
 
     public void RemoveFish(FishType type, string color)
     {
-        Fish fishToRemove;
-        foreach (Fish fish in FishList)
+        if ((int)type <= (int)FishType.Rasbora)
         {
-            if (type == fish.Type && color.Equals(fish.Color, StringComparison.OrdinalIgnoreCase))
+            FreshwaterFish fishToRemove;
+            foreach (FreshwaterFish fish in FreshwaterFishList)
             {
-                fishToRemove = fish;
-                FishList.Remove(fishToRemove);
-                break;
+                if (type == fish.Type && color.Equals(fish.Color, StringComparison.OrdinalIgnoreCase))
+                {
+                    fishToRemove = fish;
+                    FreshwaterFishList.Remove(fishToRemove);
+                    break;
+                }
+            }
+        }
+        else if ((int)type >= (int)FishType.Tang)
+        {
+            SaltwaterFish fishToRemove;
+            foreach (SaltwaterFish fish in SaltwaterFishList)
+            {
+                if (type == fish.Type && color.Equals(fish.Color, StringComparison.OrdinalIgnoreCase))
+                {
+                    fishToRemove = fish;
+                    SaltwaterFishList.Remove(fishToRemove);
+                    break;
+                }
             }
         }
     }
 
-    public void Breed(int firstIndex, int secondIndex)
+    public void BreedFresh(int firstIndex, int secondIndex)
     {
-        Fish firstFish = FishList[firstIndex];
-        Fish secondFish = FishList[secondIndex];
-        FishType type = FishType.Angelfish;
-        string color = "";
+        Fish firstFish = FreshwaterFishList[firstIndex];
+        Fish secondFish = FreshwaterFishList[secondIndex];
+        FishType type;
+        string color;
         int random = Random(1, 2);
         if (random == 1)
         {
@@ -86,10 +159,42 @@ public class Aquarium
             type = secondFish.Type;
             color = firstFish.Color;
         }
+        else
+        {
+            Console.WriteLine("Invalid fish");
+            return;
+        }
 
 
         Console.WriteLine($"A new {color} {type.ToString()} fish has been born!");
-        FishList.Add(new Fish(type, color));
+        FreshwaterFishList.Add(new FreshwaterFish(type, color));
+    }
+    public void BreedSalt(int firstIndex, int secondIndex)
+    {
+        Fish firstFish = SaltwaterFishList[firstIndex];
+        Fish secondFish = SaltwaterFishList[secondIndex];
+        FishType type;
+        string color;
+        int random = Random(1, 2);
+        if (random == 1)
+        {
+            type = firstFish.Type;
+            color = secondFish.Color;
+        }
+        else if (random == 2)
+        {
+            type = secondFish.Type;
+            color = firstFish.Color;
+        }
+        else
+        {
+            Console.WriteLine("Invalid fish");
+            return;
+        }
+
+
+        Console.WriteLine($"A new {color} {type.ToString()} fish has been born!");
+        SaltwaterFishList.Add(new SaltwaterFish(type, color));
     }
 
     private int Random(int min, int max)
@@ -99,27 +204,26 @@ public class Aquarium
         return rnd;
     }
 
-    public void ShowFishType()
+    public void ShowFreshFishType()
     {
-        Console.WriteLine(FishType.Angelfish.ToString());
-        Console.WriteLine(FishType.Betta.ToString());
-        Console.WriteLine(FishType.Cherrybarb.ToString());
-        Console.WriteLine(FishType.Cichlid.ToString());
-        Console.WriteLine(FishType.Clownfish.ToString());
-        Console.WriteLine(FishType.Corydoras.ToString());
-        Console.WriteLine(FishType.Discus.ToString());
-        Console.WriteLine(FishType.Goldfish.ToString());
-        Console.WriteLine(FishType.Gourami.ToString());
-        Console.WriteLine(FishType.Guppy.ToString());
-        Console.WriteLine(FishType.Killifish.ToString());
-        Console.WriteLine(FishType.Loach.ToString());
-        Console.WriteLine(FishType.Molly.ToString());
-        Console.WriteLine(FishType.Oscar.ToString());
-        Console.WriteLine(FishType.Otocinclus.ToString());
-        Console.WriteLine(FishType.Platy.ToString());
-        Console.WriteLine(FishType.Rainbowfish.ToString());
-        Console.WriteLine(FishType.Swordtail.ToString());
-        Console.WriteLine(FishType.Tetra.ToString());
-        Console.WriteLine(FishType.Zebrafish.ToString());
+        foreach (FishType fish in Enum.GetValues(typeof(FishType)))
+        {
+            if ((int)fish <= (int)FishType.Rasbora)
+            {
+                Console.WriteLine(fish);
+            }
+        }
+
+    }
+    public void ShowSaltFishType()
+    {
+        foreach (FishType fish in Enum.GetValues(typeof(FishType)))
+        {
+            if ((int)fish >= (int)FishType.Tang)
+            {
+                Console.WriteLine(fish);
+            }
+        }
+
     }
 }
